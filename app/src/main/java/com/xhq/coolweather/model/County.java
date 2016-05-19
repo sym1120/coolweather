@@ -5,9 +5,9 @@ package com.xhq.coolweather.model;
  */
 public class County {
     private int id;
+    private int cityId;
     private String countyName;
     private String countyCode;
-    private int cityId;
 
     public int getId() {
         return id;
