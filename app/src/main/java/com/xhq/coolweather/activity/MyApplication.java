@@ -1,4 +1,4 @@
-package com.xhq.coolweather;
+package com.xhq.coolweather.activity;
 
 import android.app.Application;
 import android.content.Context;
