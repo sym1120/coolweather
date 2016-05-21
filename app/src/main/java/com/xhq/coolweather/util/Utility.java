@@ -1,7 +1,6 @@
 package com.xhq.coolweather.util;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.xhq.coolweather.db.CoolWeatherDB;
 import com.xhq.coolweather.model.City;
@@ -19,6 +18,7 @@ import java.util.Set;
 
 /**
  * Created by Xiaoq on 2016-5-19.
+ * 工具类，解析省市县城市信息，通过listview展示三级列表
  */
 public class Utility {
 
@@ -26,10 +26,7 @@ public class Utility {
      * 解析和处理Province信息数据，并存到数据库
      */
     public synchronized static boolean handleProvincesResponse(CoolWeatherDB coolWeatherDB, String response) {
-        long start;
-        long end;
         if (!TextUtils.isEmpty(response)) {
-            start = System.currentTimeMillis();
             try {
                 Map<String, String> map = new HashMap<>();
                 String provinceCode;
@@ -77,8 +74,6 @@ public class Utility {
 
                     coolWeatherDB.saveProvince(province);
                 }
-                end = System.currentTimeMillis();
-                Log.d("test", end - start + "(-查询省份运行时间millis-)");
                 return true;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -100,10 +95,7 @@ public class Utility {
      */
     public static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB, String response,
                                                int provinceId, String provinceCode) {
-        long start;
-        long end;
         if (!TextUtils.isEmpty(response)) {
-            start = System.currentTimeMillis();
             Map<String, String> map = new HashMap<>();
 
             String cityCode;
@@ -170,8 +162,6 @@ public class Utility {
 
                     coolWeatherDB.saveCity(city);
                 }
-                end = System.currentTimeMillis();
-                Log.d("test", end - start + "(-查询city运行时间millis-)");
                 return true;
 
 
@@ -183,19 +173,25 @@ public class Utility {
         return false;
     }
 
+    /**
+     * 解析县地区信息，并保存到数据库
+     *
+     * @param coolWeatherDB
+     * @param response
+     * @param cityId        查询的城市的ID
+     * @param cityCode      查询的城市的CODE
+     * @return
+     */
+
     public static boolean handleCountiesResponse(CoolWeatherDB coolWeatherDB, String response,
                                                  int cityId, String cityCode) {
-        long start;
-        long end;
         if (!TextUtils.isEmpty(response)) {
-            start = System.currentTimeMillis();
             String countyCode;
             String countyName;
             Map<String, String> map = new HashMap<>();
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 JSONArray jsonArray = jsonObject.getJSONArray("city_info");
-                Log.d("test", "array" + jsonArray.length());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject subObject = jsonArray.getJSONObject(i);
                     String id = subObject.getString("id");
@@ -214,7 +210,6 @@ public class Utility {
 
             Set<Map.Entry<String, String>> entrySet = map.entrySet();
             Iterator<Map.Entry<String, String>> iterator = entrySet.iterator();
-            Log.d("test",map.size()+"size-");
             while (iterator.hasNext()) {
                 County county = new County();
                 Map.Entry<String, String> me = iterator.next();
@@ -223,8 +218,6 @@ public class Utility {
                 county.setCountyName(me.getValue());
                 coolWeatherDB.saveCounty(county);
             }
-            end = System.currentTimeMillis();
-            Log.d("test", end - start + "(--查询city时间millis)");
             return true;
         }
 

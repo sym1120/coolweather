@@ -106,6 +106,7 @@ public class CoolWeatherDB {
             city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
             city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
             city.setProvinceId(cursor.getInt(cursor.getColumnIndex("province_id")));
+            list.add(city);//之前忘记添加！
         }
         if (cursor != null) {
             cursor.close();
