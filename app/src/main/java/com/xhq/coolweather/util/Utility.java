@@ -1,5 +1,8 @@
 package com.xhq.coolweather.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.xhq.coolweather.db.CoolWeatherDB;
@@ -11,10 +14,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import static com.xhq.coolweather.R.id.temp1;
 
 /**
  * Created by Xiaoq on 2016-5-19.
@@ -222,5 +230,73 @@ public class Utility {
         }
 
         return false;
+    }
+
+    /**
+     * 解析天气信息JSON数据，并保存到本地文件
+     *
+     * @param context  上下文
+     * @param response JSON数据
+     */
+
+    public static boolean handleWeatherInfo(Context context, String response) {
+        try {
+            JSONObject object = new JSONObject(response);
+            JSONArray array = object.getJSONArray("HeWeather data service 3.0");
+            JSONObject subObject = null;
+            if (array.length() > 0) {
+                subObject = array.getJSONObject(0);
+            }
+            if (subObject != null) {
+                //获取城市名称和ID
+                JSONObject basic = subObject.getJSONObject("basic");
+                String cityName = basic.getString("city");
+                String cityId = basic.getString("id");
+                //获取更新时间
+                String updateTime = basic.getJSONObject("update").getString("loc").substring(11);
+                //获取天气最低最高温度
+                String temp1 = subObject.getJSONArray("daily_forecast").getJSONObject(0).getJSONObject("tmp").getString("min");
+                String temp2 = subObject.getJSONArray("daily_forecast").getJSONObject(0).getJSONObject("tmp").getString("max");
+                //获取天气状况信息
+                String weatherInfo = subObject.getJSONObject("now").getJSONObject("cond").getString("txt");
+
+                //将天气信息存入本地文件保存
+                saveWeatherInfo(context, cityName, cityId, updateTime, temp1, temp2, weatherInfo);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return true;
+
+    }
+
+    /**
+     * 将天气信息保存到本地文件当中
+     *
+     * @param context
+     * @param cityName
+     * @param cityId
+     * @param updateTime
+     * @param temp1
+     * @param temp2
+     * @param weatherInfo
+     */
+    public static void saveWeatherInfo(Context context, String cityName, String cityId, String updateTime, String temp1,
+                                       String temp2, String weatherInfo) {
+        //存入当前日期
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        //存入天气信息
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("city_selected", true)
+                .putString("city_name", cityName)
+                .putString("city_id", cityId)
+                .putString("update_time", updateTime)
+                .putString("temp1", temp1)
+                .putString("temp2", temp2)
+                .putString("weather_info", weatherInfo)
+                .putString("current_date", simpleDateFormat.format(new Date()));
+        editor.apply();
     }
 }
