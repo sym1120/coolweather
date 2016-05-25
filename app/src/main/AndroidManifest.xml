@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WeatherActivity"></activity>
+        <activity android:name=".activity.WeatherActivity"/>
+        <receiver android:name=".receiver.updateReceiver"/>
+        <service android:name=".service.updateWeatherService"/>
     </application>
 
 </manifest>

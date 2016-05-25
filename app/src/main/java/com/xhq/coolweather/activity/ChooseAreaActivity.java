@@ -41,6 +41,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
     private static final int CURRENT_PROVINCE = 1;
     private static final int CURRENT_CITY = 2;
     private static final int CURRENT_COUNTY = 3;
+    private boolean isFromWeather;
 
     //和风天气获取城市API接口
     private static final String ADDRESS =
@@ -51,8 +52,10 @@ public class ChooseAreaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_area);
+        //判断是否来自WeatherActivity
+        isFromWeather = getIntent().getBooleanExtra("isFromWeather", false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("city_selected", false)) {
+        if (sharedPreferences.getBoolean("city_selected", false) && !isFromWeather) {
             startActivity(new Intent(ChooseAreaActivity.this, WeatherActivity.class));
             finish();
             return;
@@ -207,7 +210,10 @@ public class ChooseAreaActivity extends AppCompatActivity {
             queryCityInfo(selectedProvince.getId());
         } else if (currentLevel == CURRENT_CITY)
             queryProvinceInfo();
-        else
+        else if (isFromWeather) {
+            startActivity(new Intent(this, WeatherActivity.class));
+            finish();
+        } else
             finish();
         //super.onBackPressed();
         //super语句害惨我了！！！导致BACK键失效！！

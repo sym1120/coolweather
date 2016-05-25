@@ -8,14 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/home"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/home" />
+
         <TextView
             android:id="@+id/city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/colorPrimary"
+            android:background="#4169E1"
             android:gravity="center"
             android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/refresh" />
     </RelativeLayout>
 
     <RelativeLayout
