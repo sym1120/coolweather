@@ -22,10 +22,8 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Unnamed-0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbee79c3-6e50-4676-ae82-3b132e827170" name="Default" comment="加入显示天气的功能">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="dbee79c3-6e50-4676-ae82-3b132e827170" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
     </list>
     <ignored path="CoolWeather.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,6 +64,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="sym1120 &lt;xhqshangyimo@gmail.com&gt;" />
         <option value="syimo &lt;xhqshangyimo@gmail.com&gt;" />
         <option value="sym11" />
       </list>
@@ -1842,7 +1841,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464096725245</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="finish all">
+      <created>1464171394366</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1464171394366</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1895,7 +1901,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="加入显示天气的功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入显示天气的功能" />
+    <MESSAGE value="finish all" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish all" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
